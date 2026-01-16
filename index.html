@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coming Soon | Something Amazing is Brewing</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary: #00f0ff;
+        --secondary: #ff00aa;
+        --accent: #ffcc00;
+        --dark: #0a0a0f;
+        --dark-light: #12121a;
+        --text: #ffffff;
+        --text-muted: #8a8a9a;
+        --gradient-1: linear-gradient(
+          135deg,
+          #0a0a0f 0%,
+          #1a1a2e 50%,
+          #0a0a0f 100%
+        );
+        --glow: 0 0 60px rgba(0, 240, 255, 0.3);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Syne", sans-serif;
+        background: var(--dark);
+        color: var(--text);
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Animated Background */
+      .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        background: var(--gradient-1);
+      }
+
+      .background::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            ellipse at 20% 20%,
+            rgba(0, 240, 255, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 80% 80%,
+            rgba(255, 0, 170, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 50% 50%,
+            rgba(255, 204, 0, 0.05) 0%,
+            transparent 70%
+          );
+        animation: gradientPulse 8s ease-in-out infinite;
+      }
+
+      @keyframes gradientPulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.7;
+          transform: scale(1.1);
+        }
+      }
+
+      /* Floating Particles */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: var(--primary);
+        border-radius: 50%;
+        opacity: 0;
+        animation: floatParticle 15s infinite;
+      }
+
+      .particle:nth-child(odd) {
+        background: var(--secondary);
+      }
+
+      .particle:nth-child(3n) {
+        background: var(--accent);
+        width: 3px;
+        height: 3px;
+      }
+
+      @keyframes floatParticle {
+        0% {
+          opacity: 0;
+          transform: translateY(100vh) rotate(0deg);
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-100vh) rotate(720deg);
+        }
+      }
+
+      /* Grid Lines */
+      .grid-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background-image: linear-gradient(
+            rgba(0, 240, 255, 0.03) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+        background-size: 100px 100px;
+        animation: gridMove 20s linear infinite;
+      }
+
+      @keyframes gridMove {
+        0% {
+          transform: perspective(500px) rotateX(60deg) translateY(0);
+        }
+        100% {
+          transform: perspective(500px) rotateX(60deg) translateY(100px);
+        }
+      }
+
+      /* Main Container - FIXED SCROLLING */
+      .container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 40px 20px 100px;
+        position: relative;
+        overflow-y: auto;
+      }
+
+      /* Pikachu Logo Section */
+      .brand {
+        opacity: 0;
+        animation: fadeSlideDown 1s ease-out 0.2s forwards;
+        margin-bottom: 20px;
+      }
+
+      .pikachu-container {
+        position: relative;
+        width: 180px;
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .pikachu-glow {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(0, 240, 255, 0.3) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: pikachuGlow 2s ease-in-out infinite;
+      }
+
+      @keyframes pikachuGlow {
+        0%, 100% { transform: scale(1); opacity: 0.6; }
+        50% { transform: scale(1.2); opacity: 0.3; }
+      }
+
+      .pikachu-img {
+        width: 150px;
+        height: 150px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 30px rgba(0, 240, 255, 0.5));
+        animation: pikachuBounce 3s ease-in-out infinite;
+        position: relative;
+        z-index: 1;
+      }
+
+      @keyframes pikachuBounce {
+        0%, 100% { transform: translateY(0) rotate(-2deg); }
+        25% { transform: translateY(-10px) rotate(2deg); }
+        50% { transform: translateY(0) rotate(-2deg); }
+        75% { transform: translateY(-5px) rotate(0deg); }
+      }
+
+      /* Lightning bolts around Pikachu */
+      .lightning {
+        position: absolute;
+        font-size: 24px;
+        animation: lightningFlash 1.5s ease-in-out infinite;
+      }
+
+      .lightning-1 { top: 10px; left: 10px; animation-delay: 0s; }
+      .lightning-2 { top: 10px; right: 10px; animation-delay: 0.5s; }
+      .lightning-3 { bottom: 20px; left: 0; animation-delay: 1s; }
+      .lightning-4 { bottom: 20px; right: 0; animation-delay: 0.3s; }
+
+      @keyframes lightningFlash {
+        0%, 100% { opacity: 0.3; transform: scale(0.8); }
+        50% { opacity: 1; transform: scale(1.2); }
+      }
+
+      /* Main Content */
+      .content {
+        text-align: center;
+        max-width: 900px;
+        width: 100%;
+      }
+
+      .tagline {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+        color: var(--primary);
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        opacity: 0;
+        animation: fadeSlideUp 1s ease-out 0.4s forwards;
+      }
+
+      .headline {
+        font-size: clamp(2rem, 6vw, 4.5rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 25px;
+        opacity: 0;
+        animation: fadeSlideUp 1s ease-out 0.6s forwards;
+      }
+
+      .headline .line1 {
+        display: block;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .headline .line2 {
+        display: block;
+        position: relative;
+      }
+
+      .headline .highlight {
+        position: relative;
+        display: inline-block;
+        color: var(--text);
+      }
+
+      .headline .highlight::before {
+        content: "";
+        position: absolute;
+        bottom: 5%;
+        left: -3%;
+        width: 106%;
+        height: 35%;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        opacity: 0.4;
+        transform: skewX(-8deg);
+        z-index: -1;
+        border-radius: 4px;
+      }
+
+      .headline .line3 {
+        display: block;
+        font-size: 0.9em;
+      }
+
+      .description {
+        font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+        color: var(--text-muted);
+        line-height: 1.8;
+        max-width: 550px;
+        margin: 0 auto 40px;
+        opacity: 0;
+        animation: fadeSlideUp 1s ease-out 0.8s forwards;
+      }
+
+      /* Countdown Timer */
+      .countdown {
+        display: flex;
+        gap: clamp(10px, 3vw, 30px);
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+        opacity: 0;
+        animation: fadeSlideUp 1s ease-out 1s forwards;
+      }
+
+      .countdown-item {
+        text-align: center;
+        position: relative;
+      }
+
+      .countdown-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: clamp(12px, 2.5vw, 25px) clamp(18px, 3.5vw, 35px);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .countdown-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--primary),
+          transparent
+        );
+      }
+
+      .countdown-box:hover {
+        border-color: var(--primary);
+        box-shadow: var(--glow);
+        transform: translateY(-5px);
+      }
+
+      .countdown-number {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(1.8rem, 5vw, 3.5rem);
+        font-weight: 700;
+        background: linear-gradient(180deg, var(--text), var(--text-muted));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: block;
+        min-width: 60px;
+      }
+
+      .countdown-label {
+        font-size: clamp(0.6rem, 1vw, 0.75rem);
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 8px;
+      }
+
+      /* Separator dots between countdown items */
+      .countdown-separator {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+        padding-bottom: 20px;
+      }
+
+      .countdown-separator span {
+        width: 5px;
+        height: 5px;
+        background: var(--primary);
+        border-radius: 50%;
+        animation: pulse 1s ease-in-out infinite;
+      }
+
+      .countdown-separator span:last-child {
+        animation-delay: 0.5s;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.5;
+          transform: scale(0.8);
+        }
+      }
+
+      /* Subscribe Form */
+      .subscribe {
+        opacity: 0;
+        animation: fadeSlideUp 1s ease-out 1.2s forwards;
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto 40px;
+      }
+
+      .subscribe-title {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        margin-bottom: 18px;
+      }
+
+      .subscribe-form {
+        display: flex;
+        gap: 0;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 60px;
+        padding: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .subscribe-form:focus-within {
+        border-color: var(--primary);
+        box-shadow: var(--glow);
+      }
+
+      .subscribe-form input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        padding: 14px 22px;
+        font-family: "Syne", sans-serif;
+        font-size: 0.95rem;
+        color: var(--text);
+        outline: none;
+        min-width: 0;
+      }
+
+      .subscribe-form input::placeholder {
+        color: var(--text-muted);
+      }
+
+      .subscribe-form button {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border: none;
+        border-radius: 50px;
+        padding: 14px 30px;
+        font-family: "Syne", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--dark);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .subscribe-form button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .subscribe-form button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 40px rgba(0, 240, 255, 0.4);
+      }
+
+      .subscribe-form button:hover::before {
+        left: 100%;
+      }
+
+      /* Success Message */
+      .success-message {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 18px;
+        background: rgba(0, 240, 255, 0.1);
+        border: 1px solid var(--primary);
+        border-radius: 60px;
+        color: var(--primary);
+        animation: successPop 0.5s ease-out;
+      }
+
+      .success-message.show {
+        display: flex;
+      }
+
+      @keyframes successPop {
+        0% {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* Social Links */
+      .social {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        opacity: 0;
+        animation: fadeSlideUp 1s ease-out 1.4s forwards;
+      }
+
+      .social-link {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: var(--text);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .social-link::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .social-link:hover {
+        border-color: var(--primary);
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+      }
+
+      .social-link:hover::before {
+        opacity: 1;
+      }
+
+      .social-link svg {
+        width: 18px;
+        height: 18px;
+        position: relative;
+        z-index: 1;
+        transition: color 0.3s ease;
+      }
+
+      .social-link:hover svg {
+        color: var(--dark);
+      }
+
+      /* Footer */
+      .footer {
+        margin-top: 50px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        opacity: 0;
+        animation: fadeIn 1s ease-out 1.6s forwards;
+        text-align: center;
+      }
+
+      /* Animations */
+      @keyframes fadeSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeSlideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Floating decoration elements */
+      .decoration {
+        position: fixed;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .decoration-1 {
+        top: 10%;
+        left: 5%;
+        width: 250px;
+        height: 250px;
+        border: 1px solid rgba(0, 240, 255, 0.1);
+        border-radius: 50%;
+        animation: rotate 30s linear infinite;
+      }
+
+      .decoration-2 {
+        bottom: 10%;
+        right: 5%;
+        width: 180px;
+        height: 180px;
+        border: 1px solid rgba(255, 0, 170, 0.1);
+        transform: rotate(45deg);
+        animation: rotateReverse 25s linear infinite;
+      }
+
+      .decoration-3 {
+        top: 50%;
+        right: 10%;
+        width: 80px;
+        height: 80px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 204, 0, 0.1) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes rotateReverse {
+        from {
+          transform: rotate(45deg);
+        }
+        to {
+          transform: rotate(-315deg);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-30px);
+        }
+      }
+
+      /* Glitch effect for headline on hover */
+      .headline:hover .highlight {
+        animation: glitch 0.3s ease;
+      }
+
+      @keyframes glitch {
+        0%,
+        100% {
+          transform: translate(0);
+        }
+        20% {
+          transform: translate(-2px, 2px);
+        }
+        40% {
+          transform: translate(-2px, -2px);
+        }
+        60% {
+          transform: translate(2px, 2px);
+        }
+        80% {
+          transform: translate(2px, -2px);
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 15px 80px;
+        }
+
+        .pikachu-container {
+          width: 140px;
+          height: 140px;
+        }
+
+        .pikachu-img {
+          width: 120px;
+          height: 120px;
+        }
+
+        .countdown-separator {
+          display: none;
+        }
+
+        .subscribe-form {
+          flex-direction: column;
+          border-radius: 20px;
+          padding: 12px;
+        }
+
+        .subscribe-form input {
+          text-align: center;
+        }
+
+        .subscribe-form button {
+          width: 100%;
+        }
+
+        .decoration-1,
+        .decoration-2 {
+          display: none;
+        }
+
+        .lightning {
+          font-size: 18px;
+        }
+      }
+
+      /* Loading animation for numbers */
+      .countdown-number {
+        transition: transform 0.3s ease;
+      }
+
+      .countdown-number.flip {
+        animation: flipNumber 0.6s ease;
+      }
+
+      @keyframes flipNumber {
+        0% {
+          transform: rotateX(0);
+        }
+        50% {
+          transform: rotateX(90deg);
+        }
+        100% {
+          transform: rotateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background Elements -->
+    <div class="background"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Decoration Elements -->
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+    <div class="decoration decoration-3"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+      <!-- Pikachu Logo -->
+      <div class="brand">
+        <div class="pikachu-container">
+          <div class="pikachu-glow"></div>
+          <span class="lightning lightning-1">⚡</span>
+          <span class="lightning lightning-2">⚡</span>
+          <span class="lightning lightning-3">⚡</span>
+          <span class="lightning lightning-4">⚡</span>
+          <img 
+            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" 
+            alt="Pikachu" 
+            class="pikachu-img"
+          />
+        </div>
+      </div>
+
+      <div class="content">
+        <p class="tagline">✦ Launching Soon ✦</p>
+        <h1 class="headline">
+          <span class="line1">Get Ready!</span>
+          <span class="line2">Something <span class="highlight">Amazing</span></span>
+          <span class="line3">is Coming</span>
+        </h1>
+        <p class="description">
+          We're working hard to bring you an extraordinary experience. 
+          Be the first to know when we launch. Subscribe below and join the revolution.
+        </p>
+
+        <!-- Countdown Timer -->
+        <div class="countdown" id="countdown">
+          <div class="countdown-item">
+            <div class="countdown-box">
+              <span class="countdown-number" id="days">00</span>
+              <span class="countdown-label">Days</span>
+            </div>
+          </div>
+          <div class="countdown-separator">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-box">
+              <span class="countdown-number" id="hours">00</span>
+              <span class="countdown-label">Hours</span>
+            </div>
+          </div>
+          <div class="countdown-separator">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-box">
+              <span class="countdown-number" id="minutes">00</span>
+              <span class="countdown-label">Minutes</span>
+            </div>
+          </div>
+          <div class="countdown-separator">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="countdown-item">
+            <div class="countdown-box">
+              <span class="countdown-number" id="seconds">00</span>
+              <span class="countdown-label">Seconds</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subscribe Form -->
+        <div class="subscribe">
+          <p class="subscribe-title">Get notified when we launch</p>
+          <form class="subscribe-form" id="subscribeForm">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              required
+            />
+            <button type="submit">Notify Me</button>
+          </form>
+          <div class="success-message" id="successMessage">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Thanks! We'll notify you when we launch.</span>
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="social">
+          <a href="https://wa.me/918989282885" class="social-link" aria-label="WhatsApp" target="_blank">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+          <a href="https://www.instagram.com/growthifyservices.in/?igsh=d2NkcHMwN3ZxeXMw" class="social-link" aria-label="Instagram">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+          <a href="#" class="social-link" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+              />
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/company/growthifyservices/posts/?feedView=all" class="social-link" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+              />
+            </svg>
+          </a>
+          <a href="#" class="social-link" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+              />
+            </svg>
+          </a>
+        </div>
+
+        <p class="footer">© 2025 Your Company. All rights reserved.</p>
+      </div>
+    </div>
+
+    <script>
+      // Generate particles
+      function createParticles() {
+        const container = document.getElementById("particles");
+        const particleCount = 40;
+
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement("div");
+          particle.className = "particle";
+          particle.style.left = Math.random() * 100 + "%";
+          particle.style.animationDelay = Math.random() * 15 + "s";
+          particle.style.animationDuration = 15 + Math.random() * 10 + "s";
+          container.appendChild(particle);
+        }
+      }
+
+      // Countdown Timer
+      function updateCountdown() {
+        // Set your launch date here
+        const launchDate = new Date();
+        launchDate.setDate(launchDate.getDate() + 30); // 30 days from now
+
+        const now = new Date();
+        const diff = launchDate - now;
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        updateNumber("days", days);
+        updateNumber("hours", hours);
+        updateNumber("minutes", minutes);
+        updateNumber("seconds", seconds);
+      }
+
+      function updateNumber(id, value) {
+        const element = document.getElementById(id);
+        const newValue = value.toString().padStart(2, "0");
+
+        if (element.textContent !== newValue) {
+          element.classList.add("flip");
+          setTimeout(() => {
+            element.textContent = newValue;
+            element.classList.remove("flip");
+          }, 300);
+        }
+      }
+
+      // Subscribe form handling
+      document
+        .getElementById("subscribeForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const form = this;
+          const successMessage = document.getElementById("successMessage");
+
+          // Hide form and show success message
+          form.style.display = "none";
+          successMessage.classList.add("show");
+
+          // You would typically send the email to your backend here
+          console.log("Email submitted:", form.querySelector("input").value);
+        });
+
+      // Initialize
+      createParticles();
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    </script>
+  </body>
+</html>
