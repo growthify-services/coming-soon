@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Coming Soon | Something Amazing is Brewing</title>
+    <title>Growthify Services - Coming Soon</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -957,7 +957,7 @@
           </a>
         </div>
 
-        <p class="footer">© 2025 Your Company. All rights reserved.</p>
+        <p class="footer">© 2026 Growthify Services.</p>
       </div>
     </div>
 
@@ -977,14 +977,40 @@
         }
       }
 
+      // ✅ FIX: Launch date ko ONCE set karo - function ke bahar
+      // Yahan apni launch date set karo (format: Year, Month-1, Day, Hour, Minute, Second)
+      // Note: Month 0-indexed hai, so February = 1
+      const LAUNCH_DATE = new Date('2025-02-19T00:00:00');
+      
+      // Ya agar aaj se 30 din baad launch karna hai to localStorage use karo
+      // taki page refresh par reset na ho
+      function getLaunchDate() {
+        const storedDate = localStorage.getItem('launchDate');
+        if (storedDate) {
+          return new Date(storedDate);
+        }
+        // Pehli baar - 30 days from now set karo
+        const launchDate = new Date();
+        launchDate.setDate(launchDate.getDate() + 30);
+        localStorage.setItem('launchDate', launchDate.toISOString());
+        return launchDate;
+      }
+
+      const launchDate = getLaunchDate();
+
       // Countdown Timer
       function updateCountdown() {
-        // Set your launch date here
-        const launchDate = new Date();
-        launchDate.setDate(launchDate.getDate() + 30); // 30 days from now
-
         const now = new Date();
         const diff = launchDate - now;
+
+        // Agar launch date beet gaya hai
+        if (diff <= 0) {
+          document.getElementById("days").textContent = "00";
+          document.getElementById("hours").textContent = "00";
+          document.getElementById("minutes").textContent = "00";
+          document.getElementById("seconds").textContent = "00";
+          return;
+        }
 
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor(
